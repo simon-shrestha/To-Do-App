@@ -30,6 +30,8 @@ public interface TaskDao {
     @Query("Select * from task where id =:taskId")
     LiveData<TaskEntry> loadTAskById(int taskId);
 
+    @Query("Delete from task")
+    void deleteAllTask();
 
     //Query for login
 

@@ -50,6 +50,17 @@ public class Repository {
         });
     }
 
+    public void deleteAll()
+    {
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.deleteAllTask();
+            }
+        });
+
+    }
+
     //Login code section
 
     public void insertPattern(final LoginEntry pattern)

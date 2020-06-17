@@ -1,5 +1,6 @@
 package com.example.todomvvm.tasks;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -8,9 +9,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.todomvvm.addedittask.AddEditTaskActivity;
 import com.example.todomvvm.R;
@@ -106,5 +111,28 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
         intent.putExtra(AddEditTaskActivity.EXTRA_TASK_ID, itemId);
         startActivity(intent);
+    }
+
+    @SuppressLint("ResourceType")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.layout.activity_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.delete_all:
+                viewModel.trunicateTask();
+                Toast.makeText(MainActivity.this, "All Tasks Deleted", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
