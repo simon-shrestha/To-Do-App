@@ -24,4 +24,7 @@
     <!-- Strings for SplashActivity -->
     <string name="just_do_it">Just Do It!</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

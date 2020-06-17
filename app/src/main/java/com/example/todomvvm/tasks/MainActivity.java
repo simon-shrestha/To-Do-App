@@ -2,6 +2,7 @@ package com.example.todomvvm.tasks;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.todomvvm.AlertFragment;
 import com.example.todomvvm.addedittask.AddEditTaskActivity;
 import com.example.todomvvm.R;
 import com.example.todomvvm.database.AppDatabase;
@@ -128,9 +130,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         switch (item.getItemId())
         {
             case R.id.delete_all:
-                viewModel.trunicateTask();
-                Toast.makeText(MainActivity.this, "All Tasks Deleted", Toast.LENGTH_LONG).show();
-                return true;
+                FragmentManager manager = getSupportFragmentManager();
+                AlertFragment alert = new AlertFragment();
+                alert.show(manager, "Confirm Delete");
             default:
                 return super.onContextItemSelected(item);
         }

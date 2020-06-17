@@ -1,6 +1,7 @@
 package com.example.todomvvm.addedittask;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.example.todomvvm.R;
@@ -40,6 +42,8 @@ public class AddEditTaskActivity extends AppCompatActivity {
 
 
     AddEditTaskViewModel viewModel;
+    ImageView share;
+    String share_text;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +93,14 @@ public class AddEditTaskActivity extends AppCompatActivity {
                 onSaveButtonClicked();
             }
         });
+        share = findViewById(R.id.share_task);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onShareText();
+            }
+        });
+
     }
 
     /**
@@ -102,6 +114,8 @@ public class AddEditTaskActivity extends AppCompatActivity {
         }
         mEditText.setText(task.getDescription());
         setPriorityInViews(task.getPriority());
+        share.setVisibility(View.VISIBLE);
+        share_text = task.getDescription();
 
     }
 
@@ -161,5 +175,16 @@ public class AddEditTaskActivity extends AppCompatActivity {
             case PRIORITY_LOW:
                 ((RadioGroup) findViewById(R.id.radioGroup)).check(R.id.radButton3);
         }
+    }
+
+    public void onShareText()
+    {
+        String mimeType = "text/plain";
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType(mimeType)
+                .setChooserTitle("Choose application to share your task description")
+                .setText(share_text)
+                .startChooser();
     }
 }
