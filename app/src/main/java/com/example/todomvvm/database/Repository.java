@@ -1,6 +1,9 @@
 package com.example.todomvvm.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+
+import com.example.todomvvm.LoginEntry;
 
 import java.util.List;
 
@@ -45,5 +48,27 @@ public class Repository {
                 dao.insertTask(task);
             }
         });
+    }
+
+    //Login code section
+
+    public void insertPattern(final LoginEntry pattern)
+    {
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.insertPattern(pattern);
+            }
+        });
+    }
+
+    public LiveData<String> getPatternById()
+    {
+        return dao.loadPatternById();
+    }
+
+    public LiveData<Integer> getPatternCount()
+    {
+        return dao.getLoginCount();
     }
 }
